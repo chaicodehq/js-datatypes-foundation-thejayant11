@@ -8,7 +8,7 @@
  * Methods to explore: typeof, Number.isInteger(), Number.isFinite(),
  *   Number.isNaN(), Array.isArray(), Boolean()
  *
- * Functions:
+ * Functions: 
  *
  *   1. getDataType(value)
  *      - typeof use karo, LEKIN special cases handle karo:
@@ -58,21 +58,42 @@
  *   isTruthy("")                 // => false
  */
 export function getDataType(value) {
-  // Your code here
+   // Your code here
+  if (value === null) {
+    return "null"
+  }
+
+  if (Array.isArray(value)) {
+    return "array"
+  }
+
+  return typeof value
 }
 
 export function isValidParcelWeight(weight) {
-  // Your code here
+   // Your code here
+  if (typeof weight !== "number") {
+    return false
+  }
+
+  if (!Number.isFinite(weight)) {
+    return false
+  }
+
+  return weight > 0
 }
 
 export function isWholeNumber(value) {
-  // Your code here
+   // Your code here
+  return Number.isInteger(value)
 }
 
 export function isNotANumber(value) {
-  // Your code here
+   // Your code here
+  return Number.isNaN(value)
 }
 
 export function isTruthy(value) {
-  // Your code here
+   // Your code here
+  return Boolean(value)
 }

@@ -50,22 +50,82 @@
  *   calculateTotal([{price:40,qty:2},...])    // => 160
  *   formatBill([{name:"Atta",price:40,qty:2}]) // => "Atta x 2 = Rs.80"
  */
+ 
 export function getItemNames(items) {
   // Your code here
+  if (!Array.isArray(items)) {
+    return []
+  }
+
+  return items.map(item => item && item.name)
 }
 
 export function getAffordableItems(items, maxPrice) {
   // Your code here
+  if (!Array.isArray(items) || typeof maxPrice !== "number") {
+    return []
+  }
+
+  return items.filter(
+    item =>
+      item &&
+      typeof item.price === "number" &&
+      item.price <= maxPrice
+  )
 }
 
 export function calculateTotal(items) {
   // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return 0
+  }
+
+  return items.reduce((total, item) => {
+    if (
+      item &&
+      typeof item.price === "number" &&
+      typeof item.qty === "number"
+    ) {
+      return total + item.price * item.qty
+    }
+    return total
+  }, 0)
 }
 
 export function sortByPrice(items, ascending) {
   // Your code here
+  if (!Array.isArray(items)) {
+    return []
+  }
+
+  const order = ascending === false ? -1 : 1
+
+  return [...items].sort((a, b) => {
+    const priceA = a && typeof a.price === "number" ? a.price : 0
+    const priceB = b && typeof b.price === "number" ? b.price : 0
+    return order * (priceA - priceB)
+  })
 }
 
 export function formatBill(items) {
   // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return ""
+  }
+
+  return items
+    .map(item => {
+      if (
+        item &&
+        typeof item.name === "string" &&
+        typeof item.price === "number" &&
+        typeof item.qty === "number"
+      ) {
+        const total = item.price * item.qty
+        return `${item.name} x ${item.qty} = Rs.${total}`
+      }
+      return ""
+    })
+    .filter(line => line !== "")
+    .join("\n")
 }
